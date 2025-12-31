@@ -55,19 +55,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 5%;
+            padding: 1.5rem 5%; /* Reduced padding slightly for image balance */
             max-width: 1200px;
             margin: 0 auto;
         }
 
+        /* UPDATED LOGO STYLES FOR IMAGE */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px; /* Sets height, width scales automatically */
+            width: auto;
+            /* Optional: nice hover effect for the logo */
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Removed old text-based logo styles
         .logo {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 800;
             font-size: 1.5rem;
             letter-spacing: -1px;
         }
-
         .logo span { color: var(--accent); }
+        */
 
         .nav-links a {
             color: var(--text-muted);
@@ -220,7 +238,10 @@
     <div class="bg-mesh"></div>
 
     <nav>
-        <div class="logo">REAP<span>CLIENT</span></div>
+        <div class="logo">
+            <img src="https://github.com/primevxie/primevxie.github.io/blob/main/reaplogodc2.png?raw=true" alt="Reap Client Logo">
+        </div>
+        
         <div class="nav-links">
             <a href="https://dcd.gg/reap" target="_blank">Discord</a>
             <a href="https://github.com/primevxie" target="_blank">GitHub</a>
