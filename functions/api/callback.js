@@ -14,19 +14,22 @@ export async function onRequest(context) {
         client_secret: context.env.DISCORD_CLIENT_SECRET,
         grant_type: 'authorization_code',
         code: code,
-        redirect_uri: 'https://skids.smelly.cc/api/auth/callback',
+        redirect_uri: 'https://skids.smelly.cc/api/callback',
       }),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
 
     const tokens = await tokenResponse.json();
-
     if (!tokens.access_token) {
       return Response.redirect('https://skids.smelly.cc/sub.html?authorized=false&error=token_fail');
     }
 
     const userResponse = await fetch('https://discord.com/api/users/@me', {
-      headers: { Authorization: `Bearer ${tokens.access_token}` },
+      headers: {
+        Authorization: `Bearer ${tokens.access_token}`,
+      },
     });
 
     const userData = await userResponse.json();
@@ -35,16 +38,14 @@ export async function onRequest(context) {
       'SELECT * FROM whitelist WHERE discord_id = ? AND is_active = 1'
     ).bind(userData.id).first();
 
+    const baseParams = `user=${encodeURIComponent(userData.username)}&userid=${userData.id}&avatar=${userData.avatar}`;
+
     if (user) {
-      return Response.redirect(
-        `https://skids.smelly.cc/sub.html?authorized=true&user=${encodeURIComponent(userData.username)}&expiry=${user.expiry_date}`
-      );
+      return Response.redirect(`https://skids.smelly.cc/sub.html?authorized=true&${baseParams}&expiry=${user.expiry_date}`);
     } else {
-      return Response.redirect(
-        `https://skids.smelly.cc/sub.html?authorized=false&user=${encodeURIComponent(userData.username)}`
-      );
+      return Response.redirect(`https://skids.smelly.cc/sub.html?authorized=false&${baseParams}`);
     }
-  } catch (e) {
+  } catch {
     return Response.redirect('https://skids.smelly.cc/sub.html?authorized=false&error=system_error');
   }
 }
