@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reap Client - Subscription Status</title>
+  <meta name="theme-color" content="#DD2020"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg-color: #0a0a0a;
+      --accent: #dd2020;
+      --accent-soft: #2ecc71;
+      --text-main: #fff;
+      --text-muted: #888;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .badge {
+      background-color: rgba(255,255,255,0.05);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.5rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .card {
+      background-color: #111;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(221, 32, 32, 0.4);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin: 0.5rem 0;
+    }
+    .success {
+      color: var(--accent-soft);
+      font-weight: 700;
+    }
+    .fail {
+      color: var(--accent);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">Subscription Status</div>
+    <h1 id="user-heading">Welcome</h1>
+    <p id="status-line">Checking your subscription…</p>
+    <p id="expiry-line"></p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const isAuth = params.get("authorized") === "true";
+    const user = params.get("user") || "User";
+    const expiry = params.get("expiry");
+
+    const heading = document.getElementById("user-heading");
+    const statusLine = document.getElementById("status-line");
+    const expiryLine = document.getElementById("expiry-line");
+
+    heading.textContent = `Welcome, ${user}`;
+
+    if (params.has("authorized")) {
+      if (isAuth) {
+        statusLine.innerHTML = `<span class="success">✅ You are WHITELISTED</span>`;
+        expiryLine.innerHTML = `<strong>Expires:</strong> ${expiry === "9999-12-31" ? "Lifetime" : expiry}`;
+      } else {
+        statusLine.innerHTML = `<span class="fail">❌ Access Denied</span>`;
+        expiryLine.innerText = "You are not currently whitelisted or your subscription expired.";
+      }
+    } else {
+      statusLine.innerText = "Invalid access. Start from the homepage.";
+    }
+  </script>
+</body>
+</html>
