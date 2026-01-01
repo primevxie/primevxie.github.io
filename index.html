@@ -2,12 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Reap Client | 1.8.9 Ghost Client</title>
-  <meta name="description" content="The ultimate optimized ghost client for Minecraft 1.8.9. Clean UI, high performance, and undetectable." />
-  <meta name="theme-color" content="#DD2020" />
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <meta name="theme-color" content="#DD2020"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
@@ -19,28 +16,16 @@
       --text-main: #ffffff;
       --text-muted: #888888;
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
       overflow-x: hidden;
       line-height: 1.6;
-    }
-    .bg-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      background: 
-        radial-gradient(circle at 15% 50%, rgba(221, 32, 32, 0.08), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(221, 32, 32, 0.05), transparent 25%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     nav {
       display: flex;
@@ -55,12 +40,11 @@
       width: auto;
       transition: transform 0.3s ease;
     }
-    .logo img:hover {
-      transform: scale(1.05);
-    }
+    .logo img:hover { transform: scale(1.05); }
     .nav-links {
       display: flex;
       gap: 1rem;
+      align-items: center;
     }
     .nav-links a, .nav-links button {
       color: var(--text-muted);
@@ -145,75 +129,46 @@
       background: #222;
       border-color: #555;
     }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      max-width: 1000px;
-      margin: 4rem auto;
-      padding: 0 1rem;
-    }
-    .stat-card {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 12px;
-      border: 1px solid #222;
-      text-align: left;
-      transition: 0.3s;
-    }
-    .stat-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-5px);
-    }
-    .stat-card i {
-      font-size: 1.5rem;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-    .stat-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-    .stat-card p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
     footer {
       text-align: center;
       padding: 4rem 0;
       color: var(--text-muted);
       font-size: 0.9rem;
       border-top: 1px solid #1a1a1a;
-      margin-top: 4rem;
+      margin-top: auto;
     }
-    @media (max-width: 768px) {
-      h1 { font-size: 2.5rem; }
-      .stats { grid-template-columns: 1fr; }
-      nav { padding: 1.5rem; flex-direction: column; gap: 1rem; }
+    #user-info {
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    #nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 100px;
+      border: 2px solid var(--accent);
+      object-fit: cover;
     }
   </style>
 </head>
-
 <body>
-  <div class="bg-mesh"></div>
-
-<nav>
-  <div class="logo">
-    <img src="https://github.com/primevxie/primevxie.github.io/blob/main/reaplogodc2.png?raw=true" alt="Reap">
-  </div>
-  <div class="nav-links" id="nav-buttons">
-    <a href="https://dcd.gg/reap" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
-    <a href="https://github.com/primevxie" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
-    <button onclick="loginWithDiscord()" id="login-btn">
-      <i class="fa-solid fa-right-to-bracket"></i> Sign In
-    </button>
-    <div id="user-info" style="display: none; align-items: center; gap: 0.6rem;">
-      <img id="nav-avatar" src="" alt="Avatar" style="width: 32px; height: 32px; border-radius: 100px; border: 2px solid var(--accent); object-fit: cover;" />
-      <span id="nav-username" style="font-weight: 600;"></span>
-      <button onclick="logout()" style="background:none; border:none; color: var(--accent); font-weight:600; cursor:pointer;">Logout</button>
+  <nav>
+    <div class="logo">
+      <img src="https://github.com/primevxie/primevxie.github.io/blob/main/reaplogodc2.png?raw=true" alt="Reap Client Logo">
     </div>
-  </div>
-</nav>
+    <div class="nav-links" id="nav-buttons">
+      <a href="https://dcd.gg/reap" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
+      <a href="https://github.com/primevxie" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+      <button onclick="loginWithDiscord()" id="login-btn">
+        <i class="fa-solid fa-right-to-bracket"></i> Sign In
+      </button>
+      <div id="user-info">
+        <img id="nav-avatar" src="" alt="Avatar" />
+        <span id="nav-username"></span>
+        <button onclick="logout()" style="background:none;border:none;color:var(--accent);font-weight:600;cursor:pointer;">Logout</button>
+      </div>
+    </div>
+  </nav>
 
   <section class="hero">
     <div class="badge">VERSION 1.2 NOW AVAILABLE</div>
@@ -232,24 +187,6 @@
     </div>
   </section>
 
-  <section class="stats">
-    <div class="stat-card">
-      <i class="fa-solid fa-ghost"></i>
-      <h3>Fully Undetectable</h3>
-      <p>Advanced bypasses designed to keep your account safe on all major servers.</p>
-    </div>
-    <div class="stat-card">
-      <i class="fa-solid fa-bolt"></i>
-      <h3>Zero Latency</h3>
-      <p>Optimized code ensures maximum FPS with zero impact on game performance.</p>
-    </div>
-    <div class="stat-card">
-      <i class="fa-solid fa-shield-halved"></i>
-      <h3>Secure Launcher</h3>
-      <p>Custom built launcher with auto-updates and Discord whitelisting</p>
-    </div>
-  </section>
-
   <footer>
     <p>&copy; 2026 Reap Client. All rights reserved.</p>
     <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.5;">Not affiliated with Mojang or Microsoft.</p>
@@ -260,34 +197,40 @@
       window.location.href =
         "https://discord.com/api/oauth2/authorize?client_id=1456236263471452213&redirect_uri=https%3A%2F%2Fskids.smelly.cc%2Fapi%2Fcallback&response_type=code&scope=identify";
     }
+
+    function logout() {
+      localStorage.clear();
+      location.href = "/";
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("authorized")) {
+      const authorized = params.get("authorized") === "true";
+      const user = params.get("user");
+      const avatar = params.get("avatar");
+      const userid = params.get("userid");
+      const expiry = params.get("expiry");
+
+      if (authorized && user && avatar && userid) {
+        localStorage.setItem("reap_user", user);
+        localStorage.setItem("reap_avatar", avatar);
+        localStorage.setItem("reap_userid", userid);
+        localStorage.setItem("reap_auth", "true");
+        localStorage.setItem("reap_expiry", expiry);
+        history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    const user = localStorage.getItem("reap_user");
+    const avatar = localStorage.getItem("reap_avatar");
+    const userid = localStorage.getItem("reap_userid");
+
+    if (user && avatar && userid) {
+      document.getElementById("login-btn").style.display = "none";
+      document.getElementById("user-info").style.display = "flex";
+      document.getElementById("nav-username").textContent = user;
+      document.getElementById("nav-avatar").src = `https://cdn.discordapp.com/avatars/${userid}/${avatar}.png`;
+    }
   </script>
-  <script>
-  function loginWithDiscord() {
-    window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1456236263471452213&redirect_uri=https%3A%2F%2Fskids.smelly.cc%2Fapi%2Fcallback&response_type=code&scope=identify";
-  }
-
-  function logout() {
-    localStorage.removeItem("reap_user");
-    localStorage.removeItem("reap_avatar");
-    localStorage.removeItem("reap_userid");
-    localStorage.removeItem("reap_auth");
-    localStorage.removeItem("reap_expiry");
-    location.reload();
-  }
-
-  const username = localStorage.getItem("reap_user");
-  const avatar = localStorage.getItem("reap_avatar");
-  const userid = localStorage.getItem("reap_userid");
-  const authorized = localStorage.getItem("reap_auth") === "true";
-
-  if (authorized && username && avatar && userid) {
-    const avatarUrl = `https://cdn.discordapp.com/avatars/${userid}/${avatar}.png`;
-
-    document.getElementById("login-btn").style.display = "none";
-    document.getElementById("user-info").style.display = "flex";
-    document.getElementById("nav-username").textContent = username;
-    document.getElementById("nav-avatar").src = avatarUrl;
-  }
-</script>
 </body>
 </html>
