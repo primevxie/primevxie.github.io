@@ -16,9 +16,7 @@ export async function onRequest(context) {
         code: code,
         redirect_uri: 'https://skids.smelly.cc/api/auth/callback',
       }),
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
 
     const tokens = await tokenResponse.json();
@@ -28,9 +26,7 @@ export async function onRequest(context) {
     }
 
     const userResponse = await fetch('https://discord.com/api/users/@me', {
-      headers: {
-        Authorization: `Bearer ${tokens.access_token}`,
-      },
+      headers: { Authorization: `Bearer ${tokens.access_token}` },
     });
 
     const userData = await userResponse.json();
